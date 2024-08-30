@@ -1,4 +1,4 @@
-package com.example.spring_batch.batch;
+package com.example.spring_batch;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,11 +20,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JobScheduler {
     private final JobLauncher jobLauncher;
-    private final Job exampleJob1;
-    private final Job exampleJob2;
+    private final Job example1Job1;
+    private final Job example1Job2;
+    private final Job example2Job1;
 
-    @Scheduled(fixedDelay = 5000)  // 5초마다 실행
-    public void runJob1() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+    private static JobParameters getJobParameters() {
         Map<String, JobParameter<?>> jobParametersMap = new HashMap<>();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
@@ -32,10 +32,15 @@ public class JobScheduler {
         JobParameter<String> jobParameter = new JobParameter<>(date, String.class);
 
         jobParametersMap.put("date", jobParameter);
-        JobParameters jobParameters = new JobParameters(jobParametersMap);
+        return new JobParameters(jobParametersMap);
+    }
 
-        JobExecution jobExecution1 = jobLauncher.run(exampleJob1, jobParameters);
-        JobExecution jobExecution2 = jobLauncher.run(exampleJob2, jobParameters);
+//    @Scheduled(fixedDelay = 5000)  // 5초마다 실행
+    public void runJob1() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = getJobParameters();
+
+        JobExecution jobExecution1 = jobLauncher.run(example1Job1, jobParameters);
+        JobExecution jobExecution2 = jobLauncher.run(example1Job2, jobParameters);
 
         while (jobExecution1.isRunning() || jobExecution2.isRunning()) {
             log.info("Job is running...");
@@ -56,5 +61,12 @@ public class JobScheduler {
         log.info("Job2 getStepExecutions: {}", jobExecution2.getStepExecutions());
         log.info("Job2 getLastUpdated: {}", jobExecution2.getLastUpdated());
         log.info("Job2 getFailureExceptions: {}", jobExecution2.getFailureExceptions());
+    }
+
+//    @Scheduled(fixedDelay = 5000)
+    public void runJob2() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = getJobParameters();
+
+        jobLauncher.run(example2Job1, jobParameters);
     }
 }

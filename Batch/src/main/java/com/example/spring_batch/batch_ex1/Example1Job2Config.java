@@ -1,29 +1,26 @@
-package com.example.spring_batch.batch;
+package com.example.spring_batch.batch_ex1;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-@Log4j2(topic = "example-job2-config")
+@Log4j2(topic = "example1-job2-config")
 @Configuration
-public class ExampleJob2Config {
+public class Example1Job2Config {
     /**
      *  Flow를 가진 Job 생성
      * */
     @Bean
-    public Job exampleJob2(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
-        return new JobBuilder("exampleJob2", jobRepository)
+    public Job example1Job2(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
+        return new JobBuilder("example1Job2", jobRepository)
                 .start(oneStep(jobRepository, platformTransactionManager))
                         .on("FAILED")  // oneStep의 ExitStatus가 FAILED일 경우
                         .to(failureStep(jobRepository, platformTransactionManager))  // failureStep 실행

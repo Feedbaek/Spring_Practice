@@ -1,9 +1,8 @@
-package com.example.spring_batch.batch;
+package com.example.spring_batch.batch_ex1;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -13,15 +12,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-@Log4j2(topic = "example-job1-config")
+@Log4j2(topic = "example1-job1-config")
 @Configuration
-public class ExampleJob1Config {
+public class Example1Job1Config {
     /**
      * 여러개의 Step과 Tasklet을 가진 Job 생성
      * */
     @Bean
-    public Job exampleJob1(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
-        return new JobBuilder("exampleJob1", jobRepository)
+    public Job example1Job1(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
+        return new JobBuilder("example1Job1", jobRepository)
                 .start(oneStep(jobRepository, platformTransactionManager))
                 .next(twoStep(jobRepository, platformTransactionManager))
                 .next(threeStep(jobRepository, platformTransactionManager))

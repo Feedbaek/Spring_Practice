@@ -1,4 +1,4 @@
-package com.example.spring_batch.batch;
+package com.example.spring_batch;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Bean;
