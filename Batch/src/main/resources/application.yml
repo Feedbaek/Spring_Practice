@@ -5,7 +5,7 @@ spring:
   batch:
     job:
       enabled: true
-      name: example2Job1
+      name: example3Job
     jdbc:
       initialize-schema: always
 
@@ -24,12 +24,19 @@ spring:
 
   # JPA
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate # flyway가 실행되고 ddl-auto가 실행됨. validate로 설정하여 검증 모드로 설정.
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
-        show_sql: false
+        show_sql: true
     open-in-view: false
+    defer-datasource-initialization: false  # hibernate와 flyway 초기화 실행 순서 지정. false로 설정하면 flyway가 먼저 실행됨.
+
+  # Flyway
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db
+    baseline-version: 0
+    fail-on-missing-locations: true

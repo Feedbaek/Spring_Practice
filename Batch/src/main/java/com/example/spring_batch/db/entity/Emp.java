@@ -7,8 +7,11 @@ import lombok.*;
 @Getter
 @Entity
 @Table(name = "emp")
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Emp {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,10 +19,12 @@ public class Emp {
     private String dept;
     private String salary;
 
-    @Builder
-    public Emp(String name, String dept, String salary) {
-        this.name = name;
-        this.dept = dept;
-        this.salary = salary;
+    public static Emp of(Long id, String name, String dept, String salary) {
+        return Emp.builder()
+                .id(id)
+                .name(name)
+                .dept(dept)
+                .salary(salary)
+                .build();
     }
 }

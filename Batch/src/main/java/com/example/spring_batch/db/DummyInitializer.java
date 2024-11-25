@@ -3,10 +3,12 @@ package com.example.spring_batch.db;
 import com.example.spring_batch.db.entity.Emp;
 import com.example.spring_batch.db.repository.EmpRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j(topic = "DummyInitializer")
 @Component
 @RequiredArgsConstructor
 public class DummyInitializer implements CommandLineRunner {
