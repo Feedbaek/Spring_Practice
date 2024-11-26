@@ -5,7 +5,7 @@ spring:
   batch:
     job:
       enabled: true
-      name: example3Job
+      name: example3Job2
     jdbc:
       initialize-schema: always
 
@@ -40,3 +40,6 @@ spring:
     locations: classpath:db
     baseline-version: 0
     fail-on-missing-locations: true
+
+mybatis:
+  mapper-locations: "classpath:/mapper/*.xml"

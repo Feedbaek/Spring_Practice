@@ -3,6 +3,8 @@ package com.example.spring_batch.db.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @ToString
 @Getter
 @Entity
@@ -10,7 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Emp {
+public class Emp implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

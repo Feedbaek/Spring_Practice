@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.spring_batch.db.mapper.EmpMapper">
+
+    <insert id="insertEmp" parameterType="com.example.spring_batch.db.entity.Emp">
+        INSERT INTO EMP
+        (id, name, dept, salary)
+        VALUES
+        (#{id}, #{name}, #{dept}, #{salary})
+    </insert>
+
+    <update id="updateEmp" parameterType="com.example.spring_batch.db.entity.Emp">
+        UPDATE EMP
+        SET name = #{name}, dept = #{dept}, salary = #{salary}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

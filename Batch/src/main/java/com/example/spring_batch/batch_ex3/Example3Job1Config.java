@@ -20,52 +20,32 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
-public class Example3JobConfig {
+public class Example3Job1Config {
 
     private final PlatformTransactionManager transactionManager;
     private final JobRepository jobRepository;
 
-    private final EmpRepository empRepository;
+    private final FlatFileItemReader<EmpDto> reader;
+    private final ItemProcessor<EmpDto, Emp> processor;
+    private final RepositoryItemWriter<Emp> writer;
 
+    /**
+     * csv 파일을 읽어서 JPA를 사용해 DB에 저장하는 Job
+     * */
     @Bean
-    public Job example3Job() {
-        return new JobBuilder("example3Job", jobRepository)
-                .start(firstStep())
+    public Job example3Job1() {
+        return new JobBuilder("example3Job1", jobRepository)
+                .start(example3Step1())
                 .build();
     }
 
     @Bean
-    public Step firstStep() {
-        return new StepBuilder("firstStep", jobRepository)
+    public Step example3Step1() {
+        return new StepBuilder("example3Step1", jobRepository)
                 .<EmpDto, Emp>chunk(1, transactionManager)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer())
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
                 .build();
     }
-
-    @Bean
-    public FlatFileItemReader<EmpDto> reader() {
-        return new FlatFileItemReaderBuilder<EmpDto>()
-                .name("empReader")
-                .resource(new ClassPathResource("emp/data.csv"))
-                .delimited()
-                .names("id", "name", "dept", "salary")
-                .targetType(EmpDto.class)
-                .build();
-    }
-
-    @Bean
-    public ItemProcessor<EmpDto, Emp> processor() {
-        return item -> Emp.of(Long.valueOf(item.getId()), item.getName(), item.getDept(), item.getSalary());
-    }
-
-    @Bean
-    public RepositoryItemWriter<Emp> writer() {
-        RepositoryItemWriter<Emp> writer = new RepositoryItemWriter<>();
-        writer.setRepository(empRepository);
-        writer.setMethodName("save");
-        return writer;
-    }
-
 }
