@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.springframework.batch.core.ItemWriteListener;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.scope.context.StepSynchronizationManager;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.core.scope.context.JobSynchronizationManager;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemProcessor;
@@ -45,11 +45,10 @@ public class Example3Config {
     }
 
     @Bean
-    @StepScope
-    public ListItemReader<Emp> failedItemsReader(@Value("#{stepExecution}") StepExecution stepExecution) {
-        ExecutionContext executionContext = stepExecution.getExecutionContext();
+    @JobScope
+    public ListItemReader<Emp> failedItemsReader(@Value("#{jobExecution}") JobExecution jobExecution) {
+        ExecutionContext executionContext = jobExecution.getExecutionContext();
         List<Emp> failedItems = (List<Emp>) executionContext.get("failedItems");
-        System.out.println("failedItems: " + failedItems);
         return new ListItemReader<>(failedItems == null ? Collections.emptyList() : failedItems);
     }
 
@@ -75,7 +74,6 @@ public class Example3Config {
     }
 
     @Bean
-    @StepScope
     public MyBatisBatchItemWriter<Emp> mybatisUpdateWriter() {
         MyBatisBatchItemWriter<Emp> writer = new MyBatisBatchItemWriter<>();
         writer.setSqlSessionFactory(sqlSessionFactory);
@@ -84,13 +82,12 @@ public class Example3Config {
     }
 
     @Bean
-    @StepScope
     public ItemWriteListener<Emp> MyItemWriteListener() {
         return new ItemWriteListener<>() {
             @Override
             public void onWriteError(Exception ex, Chunk<? extends Emp> item) {
-                StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
-                ExecutionContext executionContext = stepExecution.getExecutionContext();
+                JobExecution jobExecution = JobSynchronizationManager.getContext().getJobExecution();
+                ExecutionContext executionContext = jobExecution.getExecutionContext();
 
                 List<Emp> failedItems = (List<Emp>) executionContext.get("failedItems");
                 if (failedItems == null) {
