@@ -22,7 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
-public class Example3Job2Config {
+public class Example3_2 {
 
     private final PlatformTransactionManager transactionManager;
     private final JobRepository jobRepository;

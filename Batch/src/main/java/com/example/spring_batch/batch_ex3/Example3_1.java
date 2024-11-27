@@ -17,7 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
-public class Example3Job1Config {
+public class Example3_1 {
 
     private final PlatformTransactionManager transactionManager;
     private final JobRepository jobRepository;

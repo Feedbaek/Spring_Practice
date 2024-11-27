@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Log4j2(topic = "example1-job1-config")
 @Configuration
-public class Example1Job1Config {
+public class Example1_1 {
     /**
      * 여러개의 Step과 Tasklet을 가진 Job 생성
      * */

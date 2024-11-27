@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Log4j2(topic = "example1-job2-config")
 @Configuration
-public class Example1Job2Config {
+public class Example1_2 {
     /**
      *  Flow를 가진 Job 생성
      * */

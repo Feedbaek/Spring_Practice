@@ -7,10 +7,8 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.job.builder.JobFlowBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Log4j2(topic = "example2-job1-config")
 @Configuration
 @RequiredArgsConstructor
-public class Example2Job1Config {
+public class Example2_1 {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
