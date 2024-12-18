@@ -17,12 +17,12 @@ import java.util.Map;
 public class CustomHeaderController {
 
     @GetMapping("/header")
-    public String header(HttpServletRequest request) {
+    public Map<String, String> header(HttpServletRequest request) {
         log.info("header called");
         Map<String, String> headers = new HashMap<>();
         request.getHeaderNames().asIterator().forEachRemaining(headerName -> {
             headers.put(headerName, request.getHeader(headerName));
         });
-        return headers.toString();
+        return headers;
     }
 }
