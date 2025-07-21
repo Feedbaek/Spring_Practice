@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package        = "com.example.gRPC";
+option java_outer_classname = "GreetingProto";
+
+package greeting;
+
+// 서비스 정의
+service Greeter {
+  // SayHello 메서드
+  rpc SayHello (HelloRequest) returns (HelloReply);
+}
+
+// 요청 메시지
+message HelloRequest {
+  string name = 1;
+}
+
+// 응답 메시지
+message HelloReply {
+  string message = 1;
+}
